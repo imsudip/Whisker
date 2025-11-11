@@ -1,0 +1,44 @@
+{
+    "manifest_version": 3,
+    "name": "Speech-to-Text Input Helper",
+    "version": "1.0",
+    "description": "Adds a microphone button to input fields for speech-to-text transcription via the OpenAI Whisper API.",
+    "icons": {
+        "128": "logo.png"
+    },
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "microphone",
+        "storage"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "output.css"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "128": "logo.png"
+        }
+    }
+}
