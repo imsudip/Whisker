@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Speech-to-Text Input Helper",
+    "name": "Wishker STT",
     "version": "1.0",
-    "description": "Adds a microphone button to input fields for speech-to-text transcription via the OpenAI Whisper API.",
+    "description": "A browser extension that adds speech-to-text capabilities using OpenAI's Whisper API.",
     "icons": {
         "128": "logo.png"
     },

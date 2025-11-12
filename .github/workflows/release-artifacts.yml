@@ -1,0 +1,54 @@
+name: Release Artifacts
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build-and-attach:
+    name: Build and attach release bundles
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Prepare dist directory
+        run: mkdir -p dist
+
+      - name: Pack extension into zip
+        id: pack
+        uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
+        with:
+          extensionDir: '.'
+          zipFilePath: 'dist/whisker.zip'
+
+      - name: Sign extension into crx
+        id: sign
+        uses: cardinalby/webext-buildtools-chrome-crx-action@v2
+        with:
+          zipFilePath: 'dist/whisker.zip'
+          crxFilePath: 'dist/whisker.crx'
+          privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
+
+      - name: Upload zip asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ${{ steps.pack.outputs.zipFilePath }}
+          asset_name: whisker-${{ github.event.release.tag_name }}.zip
+          asset_content_type: application/zip
+
+      - name: Upload crx asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ${{ steps.sign.outputs.crxFilePath }}
+          asset_name: whisker-${{ github.event.release.tag_name }}.crx
+          asset_content_type: application/x-chrome-extension
