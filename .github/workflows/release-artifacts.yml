@@ -22,15 +22,15 @@ jobs:
         id: pack
         uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
         with:
-          extensionDir: '.'
-          zipFilePath: 'dist/whisker.zip'
+          extensionDir: "."
+          zipFilePath: "dist/whisker.zip"
 
       - name: Sign extension into crx
         id: sign
         uses: cardinalby/webext-buildtools-chrome-crx-action@v2
         with:
-          zipFilePath: 'dist/whisker.zip'
-          crxFilePath: 'dist/whisker.crx'
+          zipFilePath: "dist/whisker.zip"
+          crxFilePath: "dist/whisker.crx"
           privateKey: ${{ secrets.CHROME_CRX_PRIVATE_KEY }}
 
       - name: Upload zip asset

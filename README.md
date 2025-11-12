@@ -20,9 +20,10 @@ Bring hands-free input to any webpage. Whisker injects an elegant microphone con
 ## Why Whisper
 
 - Delivers consistently accurate transcripts across accents and noisy environments without extra tuning
-- Runs as a fully managed API, so the extension ships with no additional deployment surface area
 - Handles longer dictation sessions thanks to streaming-friendly `webm` inputs and fast turnaround times
-- Respects user privacy expectations by keeping audio within OpenAI's trusted infrastructure and avoiding third-party relays
+- Supports a wide range of languages and dialects out of the box
+  `Afrikaans, Arabic, Armenian, Azerbaijani, Belarusian, Bosnian, Bulgarian, Catalan, Chinese, Croatian, Czech, Danish, Dutch, English, Estonian, Finnish, French, Galician, German, Greek, Hebrew, Hindi, Hungarian, Icelandic, Indonesian, Italian, Japanese, Kannada, Kazakh, Korean, Latvian, Lithuanian, Macedonian, Malay, Marathi, Maori, Nepali, Norwegian, Persian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swahili, Swedish, Tagalog, Tamil, Thai, Turkish, Ukrainian, Urdu, Vietnamese, and Welsh.`
+- Handles punctuation, capitalization, and common formatting automatically
 
 ## 🗂 Repository Tour
 
@@ -75,6 +76,13 @@ Bring hands-free input to any webpage. Whisker injects an elegant microphone con
 - **Live mic testing**: open `dev-test.html` in a local web server and focus the provided fields to iterate quickly without leaving the browser
 - **Extension debugging**: use Chrome’s _Extensions_ page to inspect the popup, and _DevTools > Sources_ to live-edit the content script
 - **API sanity checks**: monitor network requests to `https://api.openai.com/v1/audio/transcriptions` to confirm payload shape and latency
+
+## Roadmap
+
+- Global hotkey support to toggle Whisker without relying on field focus
+- Streaming transcription updates so dictated text appears while audio uploads
+- Optional self-hosted Whisper endpoint configuration for on-prem or local inference
+- Firefox-compatible build pipeline alongside the existing Chromium packaging
 
 ## 🔐 Security & Privacy Notes
 
