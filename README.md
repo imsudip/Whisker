@@ -17,6 +17,25 @@ Bring hands-free input to any webpage. Whisker injects an elegant microphone con
 - **Built-in onboarding**: missing API keys trigger an accessible, DaisyUI-themed modal with setup steps
 - **Secure by design**: keys live in Chrome extension storage and never leak to page scripts
 
+## 🚀 Quick Start
+
+> It's not available in Chrome Web Store yet—install manually for now!
+
+1. **Clone & open** the folder in your editor of choice.
+   ```bash
+   git clone https://github.com/imsudip/Whisker
+   cd Whisker
+   ```
+2. **Load the extension** in a Chromium browser:
+   - Visit `chrome://extensions`
+   - Enable _Developer mode_
+   - Click _Load unpacked_ and select the `Whisker` directory
+3. **Authorize microphone access** when prompted the first time the content script requests it.
+4. **Set your OpenAI API key** via the popup:
+   - Click the Whisker icon in the browser toolbar
+   - Paste your key in the _OpenAI API Key_ field and hit **Save key**
+5. **Test anywhere**: focus any text field and tap the floating mic to dictate content.
+
 ## Why Whisper
 
 - Delivers consistently accurate transcripts across accents and noisy environments without extra tuning
@@ -35,19 +54,6 @@ Bring hands-free input to any webpage. Whisker injects an elegant microphone con
 - `output.css` — Compiled Tailwind+DaisyUI stylesheet consumed by both the popup and modal
 - `dev-test.html` — Local harness that mimics common fields for rapid iteration on the mic overlay
 - `popup.*` assets — Shared UI imagery, including `logo.png`, for consistent branding
-
-## 🚀 Quick Start
-
-1. **Clone & open** the folder in your editor of choice.
-2. **Load the extension** in a Chromium browser:
-   - Visit `chrome://extensions`
-   - Enable _Developer mode_
-   - Click _Load unpacked_ and select the `Whisker` directory
-3. **Authorize microphone access** when prompted the first time the content script requests it.
-4. **Set your OpenAI API key** via the popup:
-   - Click the Whisker icon in the browser toolbar
-   - Paste your key in the _OpenAI API Key_ field and hit **Save key**
-5. **Test anywhere**: focus any text field and tap the floating mic to dictate content.
 
 ## 🧩 How It Works
 
@@ -102,12 +108,12 @@ Bring hands-free input to any webpage. Whisker injects an elegant microphone con
 - Include manual test notes for any feature touching the recording pipeline or storage layer
 - Keep styles within the shared Tailwind design tokens so the overlay and popup remain consistent
 
-## � License
+## 🪪 License
 
 - Distributed under the Whisker Source-Available License v1.0 (`LICENSE`)
 - Commercial redistribution is allowed as long as recipients receive Whisker at no additional cost and attribution is preserved
 
-## �📚 Useful References
+## 📚 Useful References
 
 - Chrome extension docs — [https://developer.chrome.com/docs/extensions](https://developer.chrome.com/docs/extensions)
 - OpenAI Whisper transcription API — [https://platform.openai.com/docs/guides/speech-to-text](https://platform.openai.com/docs/guides/speech-to-text)

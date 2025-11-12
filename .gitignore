@@ -3,3 +3,5 @@ api.key
 *.exe
 input.css
 *.mjs
+*.pem
+*.pub
