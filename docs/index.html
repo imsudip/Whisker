@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Whisker &mdash; Whisper-Powered Text Input Companion</title>
+    <link rel="icon" href="../logo.png" />
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --ink: #0f172a;
+        --ink-soft: #334155;
+        --accent: #4338ca;
+        --accent-soft: rgba(67, 56, 202, 0.14);
+        --border: rgba(15, 23, 42, 0.08);
+        --card: rgba(255, 255, 255, 0.7);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+        background: radial-gradient(
+            42rem 42rem at 10% 0%,
+            rgba(67, 56, 202, 0.12),
+            transparent 46%
+          ),
+          radial-gradient(
+            34rem 34rem at 90% 10%,
+            rgba(14, 165, 233, 0.14),
+            transparent 40%
+          ),
+          var(--bg);
+        color: var(--ink);
+      }
+      .page {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 72px clamp(16px, 4vw, 48px) 96px;
+      }
+      header {
+        display: grid;
+        gap: 32px;
+      }
+      .hero {
+        display: grid;
+        gap: 40px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        align-items: center;
+      }
+      .hero-copy {
+        display: grid;
+        gap: 24px;
+      }
+      .hero-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 18px;
+        background: var(--accent-soft);
+        display: grid;
+        place-items: center;
+        color: var(--accent);
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+      h1 {
+        font-size: clamp(2.8rem, 6vw, 3.6rem);
+        letter-spacing: -0.04em;
+        margin: 0;
+      }
+      .lead {
+        font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+        line-height: 1.65;
+        color: var(--ink-soft);
+        margin: 0;
+      }
+      .cta-row {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      a.cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 24px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: transform 160ms ease, box-shadow 160ms ease;
+        box-shadow: 0 16px 32px rgba(67, 56, 202, 0.25);
+      }
+      a.cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 36px rgba(67, 56, 202, 0.3);
+      }
+      .surface {
+        background: var(--card);
+        backdrop-filter: blur(22px);
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        padding: clamp(28px, 4vw, 40px);
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+      }
+      section {
+        margin-top: 72px;
+      }
+      section h2 {
+        font-size: clamp(2rem, 4vw, 2.4rem);
+        letter-spacing: -0.03em;
+        margin: 0 0 24px;
+      }
+      .feature-grid {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+      .feature-card {
+        padding: 22px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.78);
+        display: grid;
+        gap: 12px;
+        transition: transform 160ms ease, border 160ms ease;
+      }
+      .feature-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(67, 56, 202, 0.28);
+      }
+      .feature-label {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: rgba(15, 23, 42, 0.55);
+      }
+      .feature-card h3 {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+      .feature-card p {
+        margin: 0;
+        color: var(--ink-soft);
+        line-height: 1.6;
+      }
+      .key-points {
+        display: grid;
+        gap: 12px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .key-points li {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 16px 18px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.82);
+      }
+      .key-points span {
+        width: 48px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--accent-soft);
+        color: var(--accent);
+        display: grid;
+        place-items: center;
+        font-weight: 600;
+      }
+      .roadmap {
+        display: grid;
+        gap: 18px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .roadmap li {
+        display: flex;
+        gap: 18px;
+        align-items: flex-start;
+      }
+      .roadmap-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--accent);
+        margin-top: 8px;
+        box-shadow: 0 0 0 6px var(--accent-soft);
+      }
+      .roadmap-card {
+        flex: 1;
+        padding: 22px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.8);
+      }
+      .roadmap-card h3 {
+        margin: 0 0 8px;
+        font-size: 1.1rem;
+      }
+      .roadmap-card p {
+        margin: 0;
+        color: var(--ink-soft);
+      }
+      footer {
+        margin-top: 96px;
+        text-align: center;
+        color: rgba(15, 23, 42, 0.55);
+        font-size: 0.95rem;
+      }
+      footer a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      @media (max-width: 720px) {
+        .page {
+          padding-top: 56px;
+        }
+        .surface {
+          border-radius: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="surface">
+        <div class="hero">
+          <div class="hero-copy">
+            <div class="hero-icon">
+              <img src="../logo.png" alt="Whisker logo" width="64px" />
+            </div>
+            <div>
+              <h1>Hands-free writing for every text field.</h1>
+              <p class="lead">
+                Whisker injects a refined microphone control beside focused
+                inputs and streams audio straight to Whisper for fast, accurate,
+                and secure transcription.
+              </p>
+            </div>
+            <div class="cta-row">
+              <a
+                class="cta"
+                href="https://github.com/imsudip/Whisker"
+                target="_blank"
+                rel="noopener"
+                >View on GitHub</a
+              >
+            </div>
+          </div>
+          <div>
+            <ul class="key-points">
+              <li>
+                <span>1</span>Mic overlay appears instantly on inputs,
+                textareas, and rich editors without stealing focus.
+              </li>
+              <li>
+                <span>2</span>Zero backend requirements &mdash; everything runs
+                inside the extension and on Whisper.
+              </li>
+              <li>
+                <span>3</span>API keys remain in Chrome storage, never touching
+                page scripts or external proxies.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section>
+          <h2>Highlights</h2>
+          <div class="feature-grid">
+            <article class="feature-card">
+              <span class="feature-label">Overlay</span>
+              <h3>Polished microphone UI</h3>
+              <p>
+                Gracefully tracks caret position, handles permissions, and
+                animates feedback as you record.
+              </p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-label">Whisper</span>
+              <h3>Reliable transcription</h3>
+              <p>
+                Powered entirely by OpenAI Whisper so teams get consistent
+                accuracy across accents and noisy rooms.
+              </p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-label">Security</span>
+              <h3>Keys stay local</h3>
+              <p>
+                Credentials live in Chrome-managed storage while audio travels
+                directly to OpenAI with no intermediaries.
+              </p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-label">Developer Flow</span>
+              <h3>Frictionless iteration</h3>
+              <p>
+                Use the included test harness, DaisyUI theme, and Tailwind
+                pipeline to tweak UX without rebuilds.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <h2>Roadmap</h2>
+          <ul class="roadmap">
+            <li>
+              <div class="roadmap-dot"></div>
+              <article class="roadmap-card">
+                <h3>Global hotkey activation</h3>
+                <p>
+                  Toggle Whisker anywhere with a universal shortcut, even before
+                  focusing a field.
+                </p>
+              </article>
+            </li>
+            <li>
+              <div class="roadmap-dot"></div>
+              <article class="roadmap-card">
+                <h3>Streaming transcription</h3>
+                <p>
+                  Surface partial transcripts in real time so edits can happen
+                  mid-dictation.
+                </p>
+              </article>
+            </li>
+            <li>
+              <div class="roadmap-dot"></div>
+              <article class="roadmap-card">
+                <h3>Bring your own Whisper</h3>
+                <p>
+                  Point Whisker to a self-hosted Whisper deployment for on-prem
+                  inference and data residency control.
+                </p>
+              </article>
+            </li>
+            <li>
+              <div class="roadmap-dot"></div>
+              <article class="roadmap-card">
+                <h3>Cross-browser builds</h3>
+                <p>
+                  Ship Firefox-compatible bundles alongside Chromium packaging
+                  to cover every workflow.
+                </p>
+              </article>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Get Started</h2>
+          <div class="feature-grid">
+            <article class="feature-card">
+              <span class="feature-label">Step 1</span>
+              <h3>Load the extension</h3>
+              <p>
+                Clone the repo, visit <code>chrome://extensions</code>, enable
+                Developer Mode, and load Whisker as unpacked.
+              </p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-label">Step 2</span>
+              <h3>Save your key</h3>
+              <p>
+                Open the popup, paste your OpenAI Whisper API key, and hit save.
+                Storage stays inside Chrome.
+              </p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-label">Step 3</span>
+              <h3>Dictate anywhere</h3>
+              <p>
+                Focus a field, tap the mic, and watch Whisper insert text at the
+                caret with minimal latency.
+              </p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        Built with Whisper, Tailwind CSS, and the Web Extensions API. Explore
+        the project on
+        <a
+          href="https://github.com/imsudip/Whisker"
+          target="_blank"
+          rel="noopener"
+          >GitHub</a
+        >.
+      </footer>
+    </div>
+  </body>
+</html>
